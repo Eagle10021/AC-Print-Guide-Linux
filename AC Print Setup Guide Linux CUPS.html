@@ -13,13 +13,44 @@
 
 <body>
 
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
     <header>
+        <!-- Theme Toggle -->
+        <button id="themeToggle" class="theme-toggle" title="Toggle Light/Dark Mode">
+            <!-- Icon changed via CSS/JS or inline SVG switch -->
+            <svg class="sun-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <svg class="moon-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+        </button>
+
         <div class="container header-inner">
             <a href="https://github.com/Eagle10021" target="_blank" class="brand-link" title="Visit my GitHub">
                 <img src="images/logo.png" alt="Logo" class="brand-logo">
             </a>
             <div class="header-text">
-                <span class="badge">Linux & CUPS</span>
+                <div class="badge-row">
+                    <span class="badge">Linux & CUPS</span>
+                    <span class="badge time-badge">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            style="width:14px; display:inline-block; vertical-align:middle;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        ~10 Mins
+                    </span>
+                </div>
                 <h1>AC-Print Setup Linux Using CUPS</h1>
                 <p class="subtitle">Configuration guide for PaperCut Mobility Print</p>
             </div>
