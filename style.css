@@ -55,9 +55,75 @@ body {
 
 /* Layout Container */
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem;
+}
+
+.layout-wrapper {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .layout-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+/* TOC Sidebar */
+.toc-container {
+    position: sticky;
+    top: 2rem;
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: none;
+    /* Hide by default on small screens via media query above, but we want it valid */
+}
+
+@media (min-width: 1025px) {
+    .toc-container {
+        display: block;
+    }
+}
+
+#toc h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+#toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 0.75rem;
+}
+
+#toc a {
+    color: var(--text-main);
+    font-size: 0.95rem;
+    display: block;
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+    border: none;
+    font-weight: 400;
+}
+
+#toc a:hover,
+#toc a.active {
+    color: var(--accent);
 }
 
 /* Header */
@@ -98,6 +164,51 @@ header::before {
 .header-inner {
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    text-align: left;
+}
+
+.brand-link {
+    display: block;
+    flex-shrink: 0;
+    border: none;
+    line-height: 0;
+}
+
+.brand-link:hover {
+    border: none;
+}
+
+.brand-logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-bottom: 0;
+    /* flex-shrink removed from here as it's on parent now, but keeping it doesn't hurt */
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s var(--ease-spring);
+}
+
+.brand-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+@media (max-width: 768px) {
+    .header-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .brand-logo {
+        margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+        margin: 0 auto;
+    }
 }
 
 h1 {
@@ -114,6 +225,7 @@ h1 {
     color: var(--text-muted);
     font-weight: 300;
     margin: 0;
+    max-width: 600px;
 }
 
 /* Main Cards */
@@ -293,7 +405,7 @@ code {
 
 .step-item {
     position: relative;
-    padding-left: 6rem;
+    padding-left: 5rem;
     /* Space for icon */
     margin-bottom: 4rem;
 }
@@ -416,4 +528,155 @@ footer {
     font-weight: 500;
     font-size: 0.8rem;
     margin-bottom: 1rem;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--accent);
+    color: var(--text-head);
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-standard), transform 0.3s var(--ease-spring);
+    z-index: 100;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.back-to-top svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Completed Step Styling */
+.step-item.completed .step-icon {
+    border-color: var(--success);
+    color: var(--success);
+    background-color: var(--surface);
+    box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.2), inset 0 0 0 100px rgba(52, 211, 153, 0.1);
+}
+
+.step-item.completed h2::after {
+    content: ' ✓';
+    color: var(--success);
+    font-size: 0.8em;
+    margin-left: 0.5rem;
+}
+
+/* Printer Friendly Mode */
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    header {
+        background: none;
+        border-bottom: 2px solid #000;
+        padding: 1rem 0;
+        margin-bottom: 1rem;
+    }
+
+    header::before {
+        display: none;
+    }
+
+    h1 {
+        font-size: 2rem;
+        color: black;
+    }
+
+    .subtitle {
+        color: #555;
+    }
+
+    .card {
+        background: none;
+        box-shadow: none;
+        border: 1px solid #ddd;
+        page-break-inside: avoid;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .step-icon {
+        border-color: black;
+        color: black;
+        box-shadow: none !important;
+        background: white;
+    }
+
+    .timeline::before {
+        background: #ddd;
+    }
+
+    .code-block {
+        background-color: #f5f5f5;
+        color: black;
+        border: 1px solid #ddd;
+    }
+
+    code {
+        background-color: #eee;
+        color: black;
+        border: none;
+    }
+
+    .copy-btn,
+    .back-to-top,
+    .toc-container {
+        display: none !important;
+    }
+
+    a {
+        text-decoration: underline;
+        color: black;
+    }
+}
+
+/* Particle Effect */
+.particle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    animation: particlepop 0.8s ease-out forwards;
+}
+
+@keyframes particlepop {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--dest-x), var(--dest-y)) scale(0) rotate(var(--rot));
+        opacity: 0;
+    }
 }
