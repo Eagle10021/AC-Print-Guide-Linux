@@ -40,4 +40,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Intersection Observer for scroll highlighting
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5 // Trigger when 50% of the item is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            } else {
+                entry.target.classList.remove('active');
+            }
+        });
+    }, observerOptions);
+
+    const stepItems = document.querySelectorAll('.step-item');
+    stepItems.forEach(item => {
+        observer.observe(item);
+    });
 });
